@@ -36,16 +36,32 @@ DB_NAME = os.environ.get("DB_NAME", "test_database")
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
 
-# --- Object Storage (Emergent) ---
+# --- Object Storage ---
+# STORAGE_BACKEND: "emergent" (default, works on Emergent platform) or "local" (filesystem, for running on your own computer)
+STORAGE_BACKEND = os.environ.get("STORAGE_BACKEND", "emergent").lower()
 STORAGE_URL = "https://integrations.emergentagent.com/objstore/api/v1/storage"
 EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY")
-APP_NAME = "navnidhi-sweets"
+APP_NAME = os.environ.get("APP_NAME", "navnidhi-sweets")
+LOCAL_UPLOAD_DIR = ROOT_DIR / "uploads"
 storage_key = None
 
 MIME_TYPES = {
     "jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png",
     "gif": "image/gif", "webp": "image/webp", "svg": "image/svg+xml",
 }
+
+# --- Local filesystem storage (used when STORAGE_BACKEND == "local") ---
+def _local_put(path: str, data: bytes) -> dict:
+    fp = LOCAL_UPLOAD_DIR / path
+    fp.parent.mkdir(parents=True, exist_ok=True)
+    fp.write_bytes(data)
+    return {"path": path, "size": len(data)}
+
+def _local_get(path: str) -> bytes:
+    fp = LOCAL_UPLOAD_DIR / path
+    if not fp.exists():
+        raise FileNotFoundError(path)
+    return fp.read_bytes()
 
 def init_storage():
     global storage_key
@@ -493,7 +509,10 @@ async def upload_image(file: UploadFile = File(...), current_user: UserDoc = Dep
 
     path = f"{APP_NAME}/uploads/{uuid.uuid4()}.{ext}"
     try:
-        result = await asyncio.to_thread(_put_object, path, data, content_type)
+        if STORAGE_BACKEND == "local":
+            result = await asyncio.to_thread(_local_put, path, data)
+        else:
+            result = await asyncio.to_thread(_put_object, path, data, content_type)
     except Exception as e:
         logger.error(f"Upload failed: {e}")
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail="Image upload failed. Please try again.")
@@ -516,7 +535,11 @@ async def serve_file(path: str):
     if not record:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
     try:
-        data, content_type = await asyncio.to_thread(_get_object, path)
+        if STORAGE_BACKEND == "local":
+            data = await asyncio.to_thread(_local_get, path)
+            content_type = record.get("content_type", "application/octet-stream")
+        else:
+            data, content_type = await asyncio.to_thread(_get_object, path)
     except Exception as e:
         logger.error(f"File fetch failed: {e}")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
@@ -562,11 +585,15 @@ async def update_settings(payload: SiteSettingsUpdate, current_user: UserDoc = D
 @app.on_event("startup")
 async def startup_event():
     # 0. Initialize object storage
-    try:
-        await asyncio.to_thread(init_storage)
-        logger.info("Object storage initialized successfully.")
-    except Exception as e:
-        logger.error(f"Object storage init failed: {e}")
+    if STORAGE_BACKEND == "local":
+        LOCAL_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+        logger.info(f"Using LOCAL filesystem storage at {LOCAL_UPLOAD_DIR}")
+    else:
+        try:
+            await asyncio.to_thread(init_storage)
+            logger.info("Object storage initialized successfully.")
+        except Exception as e:
+            logger.error(f"Object storage init failed: {e}")
 
     # 1. Create indexes
     await db.users.create_index("email", unique=True)

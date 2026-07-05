@@ -78,5 +78,8 @@ agenthub/agents/youtube/db
 
 memory/test_credentials.md
 
+# Local filesystem uploads (when STORAGE_BACKEND=local)
+backend/uploads/
+
 # Mobile development
 android-sdk/
