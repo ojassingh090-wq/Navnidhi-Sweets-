@@ -1,0 +1,1030 @@
+[
+  {
+    "category": "CHAAT",
+    "item": "Aloo Chaat",
+    "is_sweet": false,
+    "price": 100.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Aloo Chaat"
+  },
+  {
+    "category": "CHAAT",
+    "item": "Aloo Tikki (2Pc)",
+    "is_sweet": false,
+    "price": 120.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Aloo Tikki (2Pc)"
+  },
+  {
+    "category": "CHAAT",
+    "item": "Bhalle Papri",
+    "is_sweet": false,
+    "price": 100.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Bhalle Papri"
+  },
+  {
+    "category": "CHAAT",
+    "item": "Dahi Bhalle",
+    "is_sweet": false,
+    "price": 100.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Dahi Bhalle"
+  },
+  {
+    "category": "CHAAT",
+    "item": "Golgappe (4Pc)",
+    "is_sweet": false,
+    "price": 30.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Golgappe (4Pc)"
+  },
+  {
+    "category": "CHAAT",
+    "item": "Papri Chaat",
+    "is_sweet": false,
+    "price": 100.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Papri Chaat"
+  },
+  {
+    "category": "CHAAT",
+    "item": "Raj Kachori",
+    "is_sweet": false,
+    "price": 120.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Raj Kachori"
+  },
+  {
+    "category": "CHAAT",
+    "item": "Samosa Chaat (2Pc)",
+    "is_sweet": false,
+    "price": 100.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Samosa Chaat (2Pc)"
+  },
+  {
+    "category": "CHAAT",
+    "item": "Stuffed Golgappe (5Pc)",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Stuffed Golgappe (5Pc)"
+  },
+  {
+    "category": "DESI DELIGHTS",
+    "item": "Bedami Aloo Poori (2Pc)",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Bedami Aloo Poori (2Pc)"
+  },
+  {
+    "category": "DESI DELIGHTS",
+    "item": "Chole Bhature (2Pc)",
+    "is_sweet": false,
+    "price": 110.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Chole Bhature (2Pc)"
+  },
+  {
+    "category": "DESI DELIGHTS",
+    "item": "Kachori with Aloo Sabji (1Pc)",
+    "is_sweet": false,
+    "price": 35.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Kachori with Aloo Sabji (1Pc)"
+  },
+  {
+    "category": "DESI DELIGHTS",
+    "item": "Kachori with Chole (1Pc)",
+    "is_sweet": false,
+    "price": 35.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Kachori with Chole (1Pc)"
+  },
+  {
+    "category": "DESI DELIGHTS",
+    "item": "Matar Kulcha (2Pc)",
+    "is_sweet": false,
+    "price": 100.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Matar Kulcha (2Pc)"
+  },
+  {
+    "category": "DESI DELIGHTS",
+    "item": "Pav Bhaji (2Pc)",
+    "is_sweet": false,
+    "price": 100.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Pav Bhaji (2Pc)"
+  },
+  {
+    "category": "DESI DELIGHTS",
+    "item": "Tikki Choley (2Pc)",
+    "is_sweet": false,
+    "price": 120.0,
+    "unit": "Plate",
+    "description": "Delicious and hygienic Tikki Choley (2Pc)"
+  },
+  {
+    "category": "Snacks",
+    "item": "Aloo Samosa",
+    "is_sweet": false,
+    "price": 18.0,
+    "unit": "Per Pc",
+    "description": "Delicious and hygienic Aloo Samosa"
+  },
+  {
+    "category": "Snacks",
+    "item": "Bread Pakora",
+    "is_sweet": false,
+    "price": 25.0,
+    "unit": "Per Pc",
+    "description": "Delicious and hygienic Bread Pakora"
+  },
+  {
+    "category": "Snacks",
+    "item": "Matar Samosa",
+    "is_sweet": false,
+    "price": 320.0,
+    "unit": "Per Kg",
+    "description": "Delicious and hygienic Matar Samosa"
+  },
+  {
+    "category": "Snacks",
+    "item": "Onion Kachori",
+    "is_sweet": false,
+    "price": 30.0,
+    "unit": "Per Pc",
+    "description": "Delicious and hygienic Onion Kachori"
+  },
+  {
+    "category": "Snacks",
+    "item": "Paneer Pakora",
+    "is_sweet": false,
+    "price": 35.0,
+    "unit": "Per Pc",
+    "description": "Delicious and hygienic Paneer Pakora"
+  },
+  {
+    "category": "Snacks",
+    "item": "Plain Kachori",
+    "is_sweet": false,
+    "price": 25.0,
+    "unit": "Per Pc",
+    "description": "Delicious and hygienic Plain Kachori"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Bikaneri Burfi",
+    "is_sweet": true,
+    "price_250g": 107.5,
+    "price_500g": 215.0,
+    "price_1kg": 430.0,
+    "description": "Price per Kg",
+    "price": 430.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Coconut Burfi",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Coconut Ladoo",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Filter Coffee Burfi",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Fruit Roll",
+    "is_sweet": true,
+    "price_250g": 157.5,
+    "price_500g": 315.0,
+    "price_1kg": 630.0,
+    "description": "Price per Kg",
+    "price": 630.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Ghiya Burfi",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Homemade Burfi",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Jammu Chocolate",
+    "is_sweet": true,
+    "price_250g": 142.5,
+    "price_500g": 285.0,
+    "price_1kg": 570.0,
+    "description": "Price per Kg",
+    "price": 570.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Kheerkadam",
+    "is_sweet": true,
+    "price_250g": 157.5,
+    "price_500g": 315.0,
+    "price_1kg": 630.0,
+    "description": "Price per Kg",
+    "price": 630.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Khoya Burfi (Chocolate)",
+    "is_sweet": true,
+    "price_250g": 147.5,
+    "price_500g": 295.0,
+    "price_1kg": 590.0,
+    "description": "Price per Kg",
+    "price": 590.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Khoya Burfi (Elaichi)",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Khoya Burfi (Pista)",
+    "is_sweet": true,
+    "price_250g": 147.5,
+    "price_500g": 295.0,
+    "price_1kg": 590.0,
+    "description": "Price per Kg",
+    "price": 590.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Khoya Burfi (Plain)",
+    "is_sweet": true,
+    "price_250g": 132.5,
+    "price_500g": 265.0,
+    "price_1kg": 530.0,
+    "description": "Price per Kg",
+    "price": 530.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Khoya Kalash",
+    "is_sweet": true,
+    "price_250g": 157.5,
+    "price_500g": 315.0,
+    "price_1kg": 630.0,
+    "description": "Price per Kg",
+    "price": 630.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Khoya Roll",
+    "is_sweet": true,
+    "price_250g": 157.5,
+    "price_500g": 315.0,
+    "price_1kg": 630.0,
+    "description": "Price per Kg",
+    "price": 630.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Khoya Tarbuj",
+    "is_sweet": true,
+    "price_250g": 157.5,
+    "price_500g": 315.0,
+    "price_1kg": 630.0,
+    "description": "Price per Kg",
+    "price": 630.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Khoya Apple",
+    "is_sweet": true,
+    "price_250g": 147.5,
+    "price_500g": 295.0,
+    "price_1kg": 590.0,
+    "description": "Price per Kg",
+    "price": 590.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Mix Sweets",
+    "is_sweet": true,
+    "price_250g": 107.5,
+    "price_500g": 215.0,
+    "price_1kg": 430.0,
+    "description": "Price per Kg",
+    "price": 430.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Peda (Mathura)",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Khoya Items",
+    "item": "Peda (Kesar)",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Anjeer Bahar",
+    "is_sweet": true,
+    "price_250g": 262.5,
+    "price_500g": 525.0,
+    "price_1kg": 1050.0,
+    "description": "Price per Kg",
+    "price": 1050.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Choco Bite",
+    "is_sweet": true,
+    "price_250g": 225.0,
+    "price_500g": 450.0,
+    "price_1kg": 900.0,
+    "description": "Price per Kg",
+    "price": 900.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Honey Dryfruit Ladoo",
+    "is_sweet": true,
+    "price_250g": 262.5,
+    "price_500g": 525.0,
+    "price_1kg": 1050.0,
+    "description": "Price per Kg",
+    "price": 1050.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Kaju Casata",
+    "is_sweet": true,
+    "price_250g": 287.5,
+    "price_500g": 575.0,
+    "price_1kg": 1150.0,
+    "description": "Price per Kg",
+    "price": 1150.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Kaju Jalebi",
+    "is_sweet": true,
+    "price_250g": 287.5,
+    "price_500g": 575.0,
+    "price_1kg": 1150.0,
+    "description": "Price per Kg",
+    "price": 1150.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Kaju Paan",
+    "is_sweet": true,
+    "price_250g": 287.5,
+    "price_500g": 575.0,
+    "price_1kg": 1150.0,
+    "description": "Price per Kg",
+    "price": 1150.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Kaju Katli",
+    "is_sweet": true,
+    "price_250g": 237.5,
+    "price_500g": 475.0,
+    "price_1kg": 950.0,
+    "description": "Price per Kg",
+    "price": 950.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Kaju Roll",
+    "is_sweet": true,
+    "price_250g": 287.5,
+    "price_500g": 575.0,
+    "price_1kg": 1150.0,
+    "description": "Price per Kg",
+    "price": 1150.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Khajoor Dryfruit Ladoo",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Mango Crunch",
+    "is_sweet": true,
+    "price_250g": 162.5,
+    "price_500g": 325.0,
+    "price_1kg": 650.0,
+    "description": "Price per Kg",
+    "price": 650.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Mango Delight",
+    "is_sweet": true,
+    "price_250g": 162.5,
+    "price_500g": 325.0,
+    "price_1kg": 650.0,
+    "description": "Price per Kg",
+    "price": 650.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Mango Delight (Kachcha)",
+    "is_sweet": true,
+    "price_250g": 162.5,
+    "price_500g": 325.0,
+    "price_1kg": 650.0,
+    "description": "Price per Kg",
+    "price": 650.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Mewa Bite",
+    "is_sweet": true,
+    "price_250g": 225.0,
+    "price_500g": 450.0,
+    "price_1kg": 900.0,
+    "description": "Price per Kg",
+    "price": 900.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Mix Fruit Crunch",
+    "is_sweet": true,
+    "price_250g": 162.5,
+    "price_500g": 325.0,
+    "price_1kg": 650.0,
+    "description": "Price per Kg",
+    "price": 650.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Kaju & Dryfruit Sweets",
+    "item": "Rose Bite",
+    "is_sweet": true,
+    "price_250g": 225.0,
+    "price_500g": 450.0,
+    "price_1kg": 900.0,
+    "description": "Price per Kg",
+    "price": 900.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Snacks",
+    "item": "Dhokla",
+    "is_sweet": false,
+    "price": 55.0,
+    "unit": "110",
+    "description": "Delicious and hygienic Dhokla"
+  },
+  {
+    "category": "Snacks",
+    "item": "Gurpara",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "120",
+    "description": "Delicious and hygienic Gurpara"
+  },
+  {
+    "category": "Snacks",
+    "item": "Kaju Namkeen",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "120",
+    "description": "Delicious and hygienic Kaju Namkeen"
+  },
+  {
+    "category": "Snacks",
+    "item": "Khandvi",
+    "is_sweet": false,
+    "price": 80.0,
+    "unit": "160",
+    "description": "Delicious and hygienic Khandvi"
+  },
+  {
+    "category": "Snacks",
+    "item": "Khurma",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "120",
+    "description": "Delicious and hygienic Khurma"
+  },
+  {
+    "category": "Snacks",
+    "item": "Matthi",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "120",
+    "description": "Delicious and hygienic Matthi"
+  },
+  {
+    "category": "Snacks",
+    "item": "Matthi (Methi)",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "120",
+    "description": "Delicious and hygienic Matthi (Methi)"
+  },
+  {
+    "category": "Snacks",
+    "item": "Namakpara",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "120",
+    "description": "Delicious and hygienic Namakpara"
+  },
+  {
+    "category": "Snacks",
+    "item": "Sandwich Dhokla",
+    "is_sweet": false,
+    "price": 80.0,
+    "unit": "160",
+    "description": "Delicious and hygienic Sandwich Dhokla"
+  },
+  {
+    "category": "Snacks",
+    "item": "Shakkarpara",
+    "is_sweet": false,
+    "price": 60.0,
+    "unit": "120",
+    "description": "Delicious and hygienic Shakkarpara"
+  },
+  {
+    "category": "Snacks",
+    "item": "Masala Namakpara",
+    "is_sweet": false,
+    "price": 80.0,
+    "unit": "160",
+    "description": "Delicious and hygienic Masala Namakpara"
+  },
+  {
+    "category": "Snacks",
+    "item": "Karela Matthi",
+    "is_sweet": false,
+    "price": 80.0,
+    "unit": "160",
+    "description": "Delicious and hygienic Karela Matthi"
+  },
+  {
+    "category": "Snacks",
+    "item": "Bhakarvadi",
+    "is_sweet": false,
+    "price": 80.0,
+    "unit": "160",
+    "description": "Delicious and hygienic Bhakarvadi"
+  },
+  {
+    "category": "Sugar Free Sweets",
+    "item": "Anjeer Burfi",
+    "is_sweet": true,
+    "price_250g": 262.5,
+    "price_500g": 525.0,
+    "price_1kg": 1050.0,
+    "description": "Price per Kg",
+    "price": 1050.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Sugar Free Sweets",
+    "item": "Kesar Kaju Katli (Stevia)",
+    "is_sweet": true,
+    "price_250g": 287.5,
+    "price_500g": 575.0,
+    "price_1kg": 1150.0,
+    "description": "Price per Kg",
+    "price": 1150.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Sugar Free Sweets",
+    "item": "Kesar Malai Burfi (Stevia)",
+    "is_sweet": true,
+    "price_250g": 162.5,
+    "price_500g": 325.0,
+    "price_1kg": 650.0,
+    "description": "Price per Kg",
+    "price": 650.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Sugar Free Sweets",
+    "item": "Khajoor Burfi",
+    "is_sweet": true,
+    "price_250g": 162.5,
+    "price_500g": 325.0,
+    "price_1kg": 650.0,
+    "description": "Price per Kg",
+    "price": 650.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Amritsari Patisa",
+    "is_sweet": true,
+    "price_250g": 72.5,
+    "price_500g": 145.0,
+    "price_1kg": 290.0,
+    "description": "Price per Kg",
+    "price": 290.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Balushahi",
+    "is_sweet": true,
+    "price_250g": 122.5,
+    "price_500g": 245.0,
+    "price_1kg": 490.0,
+    "description": "Price per Kg",
+    "price": 490.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Besan Burfi (Desi Ghee)",
+    "is_sweet": true,
+    "price_250g": 127.5,
+    "price_500g": 255.0,
+    "price_1kg": 510.0,
+    "description": "Price per Kg",
+    "price": 510.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Besan Ladoo (Dryfruit)",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Chana Badam Burfi",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Chandrakala (Desi Ghee)",
+    "is_sweet": true,
+    "price_250g": 162.5,
+    "price_500g": 325.0,
+    "price_1kg": 650.0,
+    "description": "Price per Kg",
+    "price": 650.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Dodha Burfi",
+    "is_sweet": true,
+    "price_250g": 112.5,
+    "price_500g": 225.0,
+    "price_1kg": 450.0,
+    "description": "Price per Kg",
+    "price": 450.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Gulya Desi Ghee",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Gulab Jamun",
+    "is_sweet": true,
+    "price_250g": 87.5,
+    "price_500g": 175.0,
+    "price_1kg": 350.0,
+    "description": "Price per Kg",
+    "price": 350.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Gulab Jamun Goli",
+    "is_sweet": true,
+    "price_250g": 87.5,
+    "price_500g": 175.0,
+    "price_1kg": 350.0,
+    "description": "Price per Kg",
+    "price": 350.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Jalebi (Desi Ghee)",
+    "is_sweet": true,
+    "price_250g": 122.5,
+    "price_500g": 245.0,
+    "price_1kg": 490.0,
+    "description": "Price per Kg",
+    "price": 490.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Imarti (Desi Ghee)",
+    "is_sweet": true,
+    "price_250g": 127.5,
+    "price_500g": 255.0,
+    "price_1kg": 510.0,
+    "description": "Price per Kg",
+    "price": 510.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Karachi Halwa",
+    "is_sweet": true,
+    "price_250g": 122.5,
+    "price_500g": 245.0,
+    "price_1kg": 490.0,
+    "description": "Price per Kg",
+    "price": 490.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Kesar Motichoor Ladoo",
+    "is_sweet": true,
+    "price_250g": 120.0,
+    "price_500g": 240.0,
+    "price_1kg": 480.0,
+    "description": "Price per Kg",
+    "price": 480.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Lucknowi Patisa (Desi Ghee)",
+    "is_sweet": true,
+    "price_250g": 127.5,
+    "price_500g": 255.0,
+    "price_1kg": 510.0,
+    "description": "Price per Kg",
+    "price": 510.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Moongdal Burfi (Desi Ghee)",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Motichoor Ladoo",
+    "is_sweet": true,
+    "price_250g": 67.5,
+    "price_500g": 135.0,
+    "price_1kg": 270.0,
+    "description": "Price per Kg",
+    "price": 270.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Motichoor Ladoo (DG)",
+    "is_sweet": true,
+    "price_250g": 117.5,
+    "price_500g": 235.0,
+    "price_1kg": 470.0,
+    "description": "Price per Kg",
+    "price": 470.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Mysore Pak",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Motipak",
+    "is_sweet": true,
+    "price_250g": 132.5,
+    "price_500g": 265.0,
+    "price_1kg": 530.0,
+    "description": "Price per Kg",
+    "price": 530.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Paneer Jalebi (Desi Ghee)",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Paneer Jalebi (Dryfruits)",
+    "is_sweet": true,
+    "price_250g": 162.5,
+    "price_500g": 325.0,
+    "price_1kg": 650.0,
+    "description": "Price per Kg",
+    "price": 650.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Panjeeri Ladoo",
+    "is_sweet": true,
+    "price_250g": 137.5,
+    "price_500g": 275.0,
+    "price_1kg": 550.0,
+    "description": "Price per Kg",
+    "price": 550.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Shahi Ladoo",
+    "is_sweet": true,
+    "price_250g": 67.5,
+    "price_500g": 135.0,
+    "price_1kg": 270.0,
+    "description": "Price per Kg",
+    "price": 270.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Shahi Ladoo (DG)",
+    "is_sweet": true,
+    "price_250g": 117.5,
+    "price_500g": 235.0,
+    "price_1kg": 470.0,
+    "description": "Price per Kg",
+    "price": 470.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Shahi Pinni",
+    "is_sweet": true,
+    "price_250g": 142.5,
+    "price_500g": 285.0,
+    "price_1kg": 570.0,
+    "description": "Price per Kg",
+    "price": 570.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Sev Badam Burfi",
+    "is_sweet": true,
+    "price_250g": 142.5,
+    "price_500g": 285.0,
+    "price_1kg": 570.0,
+    "description": "Price per Kg",
+    "price": 570.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Besan Ladoo (Normal)",
+    "is_sweet": true,
+    "price_250g": 72.5,
+    "price_500g": 145.0,
+    "price_1kg": 290.0,
+    "description": "Normal",
+    "price": 290.0,
+    "unit": "Kg"
+  },
+  {
+    "category": "Ghee & Besan Items",
+    "item": "Besan Ladoo (Desi Ghee)",
+    "is_sweet": true,
+    "price_250g": 122.5,
+    "price_500g": 245.0,
+    "price_1kg": 490.0,
+    "description": "Desi Ghee",
+    "price": 490.0,
+    "unit": "Kg"
+  }
+]

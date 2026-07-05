@@ -1,0 +1,150 @@
+{
+  "theme": "dark",
+  "archetype": "5 (Luxury)",
+  "brand": {
+    "name": "Navnidhi Sweets",
+    "slogan": "Taste Crafted with Purity",
+    "contact": {
+      "address": "Dwarka, New Delhi - 110077",
+      "phone": "+91 98765 43210",
+      "email": "info@navnidhisweets.com",
+      "whatsapp_number": "919876543210"
+    },
+    "logo_url": "https://customer-assets.emergentagent.com/job_natural-sweets-store/artifacts/fvh7hzey_file_00000000b6e071fa838a7b01e5de191c.png"
+  },
+  "colors": {
+    "background": {
+      "default": "#0A0A0A",
+      "paper": "#111111",
+      "surface": "#1A1A1A"
+    },
+    "primary": {
+      "main": "#D4AF37",
+      "light": "#E5C865",
+      "dark": "#C5A880",
+      "contrastText": "#0A0A0A"
+    },
+    "text": {
+      "primary": "#FAFAFA",
+      "secondary": "#A3A3A3",
+      "disabled": "#525252"
+    },
+    "border": {
+      "default": "rgba(212, 175, 55, 0.2)",
+      "hover": "rgba(212, 175, 55, 0.5)"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Cormorant Garamond, serif",
+      "body": "Outfit, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-5xl sm:text-6xl tracking-tight leading-none font-medium",
+      "h2": "text-3xl sm:text-4xl tracking-tight leading-snug font-medium",
+      "h3": "text-2xl sm:text-3xl tracking-tight leading-snug",
+      "h4": "text-xl sm:text-2xl",
+      "bodyLarge": "text-lg leading-relaxed text-gray-300",
+      "body": "text-base leading-relaxed text-gray-400",
+      "small": "text-sm text-gray-500",
+      "overline": "text-xs tracking-[0.2em] uppercase text-[#D4AF37]"
+    }
+  },
+  "spacing_and_layout": {
+    "container": "max-w-7xl mx-auto px-6 sm:px-8 md:px-12",
+    "section_padding": "py-20 md:py-32",
+    "grid": {
+      "bento_marketing": "grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8",
+      "product_catalog": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    },
+    "card_padding": "p-6 md:p-8"
+  },
+  "surfaces_and_effects": {
+    "header": "backdrop-blur-xl bg-[#0A0A0A]/80 border-b border-[#D4AF37]/10",
+    "card": "bg-[#111111] border border-[#D4AF37]/10 hover:border-[#D4AF37]/30 transition-colors duration-300",
+    "button_primary": "bg-[#D4AF37] text-[#0A0A0A] font-medium px-6 py-3 hover:bg-[#E5C865] transition-all duration-200",
+    "button_outline": "border border-[#D4AF37] text-[#D4AF37] px-6 py-3 hover:bg-[#D4AF37]/10 transition-all duration-200",
+    "image_overlay": "absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent",
+    "glass": "backdrop-blur-xl bg-[#111111]/60 border border-[#D4AF37]/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+  },
+  "components": {
+    "navigation": {
+      "type": "sticky",
+      "behavior": "crystal glassmorphism",
+      "links": ["Home", "Our Story", "Sweets", "Bhaji", "Snacks", "Gifting", "Experience", "Contact"]
+    },
+    "hero": {
+      "layout": "full height, center aligned content over darkened background image",
+      "overlay": "bg-black/50 to let the hero image breathe while maintaining text contrast",
+      "cta": "Primary gold button leading to product catalog"
+    },
+    "product_card": {
+      "style": "flat rectangular, minimal",
+      "elements": [
+        "High quality image (aspect ratio 4:5 or 1:1)",
+        "Title in serif font",
+        "Weight/Quantity selector (styled clean dropdown/toggle)",
+        "Price",
+        "Add to Cart CTA (Outline or Primary)"
+      ]
+    },
+    "cart_drawer": {
+      "style": "Right-side slide-over, deep black background",
+      "cta": "Order via WhatsApp",
+      "whatsapp_logic": "Generate a text string of cart items and redirect to wa.me/919876543210?text=urlencoded_string"
+    },
+    "store_experience": {
+      "style": "Large immersive photography with minimal text overlay, bento grid layout for interior shots"
+    },
+    "contact_inquiry_form": {
+      "style": "Minimal input fields, underline-only (border-b) or dark filled inputs with gold borders on focus"
+    }
+  },
+  "motion_and_interactions": {
+    "hover": "Subtle scale up for images (1.05x), border color transition to gold for cards",
+    "scroll": "Smooth scrolling using Lenis (if applicable), staggered fade-in up for product grids",
+    "page_transitions": "Fade in on mount"
+  },
+  "media": {
+    "hero_background": {
+      "url": "https://images.pexels.com/photos/8887196/pexels-photo-8887196.jpeg",
+      "description": "Delicious Indian sweets arranged with traditional oil lamps, dark rich tones.",
+      "category": "hero"
+    },
+    "sweets_category": {
+      "url": "https://images.pexels.com/photos/15014918/pexels-photo-15014918.jpeg",
+      "description": "Close-up of traditional Indian sweet Gulab Jamun on black background.",
+      "category": "product_showcase"
+    },
+    "gifting_category": {
+      "url": "https://images.unsplash.com/photo-1595246007497-15e0ed4b8d96",
+      "description": "Premium packaging box.",
+      "category": "gifting"
+    },
+    "store_experience": {
+      "url": "https://images.unsplash.com/photo-1748551204300-f227d5af350f",
+      "description": "Dark, elegant dining/store interior.",
+      "category": "experience"
+    },
+    "generic_product": {
+      "url": "https://images.unsplash.com/photo-1772986236859-b16543cea543",
+      "description": "Assortment of chocolates/sweets on dark fabric.",
+      "category": "product"
+    }
+  },
+  "accessibility_and_testing": {
+    "contrast": "Ensure gold text (#D4AF37) against dark backgrounds (#0A0A0A) meets minimum 4.5:1 WCAG AA ratio. Use #FAFAFA for long form body text.",
+    "testing_attributes": "All interactive elements (buttons, links, selects, form inputs, cart triggers) MUST have data-testid attributes (e.g., data-testid='whatsapp-checkout-btn', data-testid='add-to-cart-gulab-jamun')."
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the Dark Luxury Archetype. The background MUST be pure black (#0A0A0A) or near-black (#111111).",
+    "Use 'Cormorant Garamond' for all headings and 'Outfit' for body text. Do NOT use Inter for headings.",
+    "The primary brand color is Gold (#D4AF37). Use it sparingly for text highlights, borders, and primary CTAs.",
+    "Do NOT use standard white background Shadcn cards. Override all Shadcn components (Cards, Inputs, Drawers) to have #111111 backgrounds and gold/10 borders.",
+    "Implement a slide-over Cart drawer. The final checkout button MUST redirect to WhatsApp using the provided wa.me link structure, containing the cart items details.",
+    "Ensure the hero section uses the provided hero background image with a proper dark overlay so the gold text is fully readable.",
+    "Use Phosphor icons or Lucide icons configured with thin/light strokes to match the luxury aesthetic.",
+    "Include data-testid on all key interactive elements."
+  ]
+}
