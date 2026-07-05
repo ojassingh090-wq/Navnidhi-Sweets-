@@ -83,3 +83,9 @@ backend/uploads/
 
 # Mobile development
 android-sdk/
+.env
+.env.*
+*.env
+credentials.json
+*.key
+.credentials
