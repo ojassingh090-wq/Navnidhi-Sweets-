@@ -192,6 +192,12 @@ class ReviewDoc(BaseDocument):
 class SiteSettingsUpdate(BaseModel):
     logo_url: Optional[str] = None
     hero_url: Optional[str] = None
+    whatsapp_number: Optional[str] = None
+    phone_display: Optional[str] = None
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
 
 # API Request/Response Models
 class UserResponse(BaseModel):
@@ -314,6 +320,21 @@ async def logout(response: Response, current_user: UserDoc = Depends(get_current
 @api_router.get("/auth/me", response_model=UserResponse)
 async def get_me(current_user: UserDoc = Depends(get_current_user)):
     return UserResponse(id=current_user.id, email=current_user.email, name=current_user.name, role=current_user.role)
+
+@api_router.post("/auth/change-password")
+async def change_password(payload: ChangePasswordRequest, current_user: UserDoc = Depends(get_current_user)):
+    user = await db.users.find_one({"_id": ObjectId(current_user.id)})
+    if not user or not verify_password(payload.current_password, user["password_hash"]):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Current password is incorrect")
+    if len(payload.new_password) < 8:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="New password must be at least 8 characters long")
+    if verify_password(payload.new_password, user["password_hash"]):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="New password must be different from the current password")
+    await db.users.update_one(
+        {"_id": ObjectId(current_user.id)},
+        {"$set": {"password_hash": hash_password(payload.new_password), "password_changed": True}}
+    )
+    return {"message": "Password updated successfully"}
 
 # --- PRODUCTS ENDPOINTS ---
 @api_router.get("/products", response_model=List[ProductDoc])
@@ -510,8 +531,13 @@ async def serve_file(path: str):
 async def get_settings():
     doc = await db.site_settings.find_one({"key": "site"})
     if not doc:
-        return {"logo_url": "", "hero_url": ""}
-    return {"logo_url": doc.get("logo_url", ""), "hero_url": doc.get("hero_url", "")}
+        return {"logo_url": "", "hero_url": "", "whatsapp_number": "", "phone_display": ""}
+    return {
+        "logo_url": doc.get("logo_url", ""),
+        "hero_url": doc.get("hero_url", ""),
+        "whatsapp_number": doc.get("whatsapp_number", ""),
+        "phone_display": doc.get("phone_display", "")
+    }
 
 @api_router.put("/settings")
 async def update_settings(payload: SiteSettingsUpdate, current_user: UserDoc = Depends(get_current_user)):
@@ -524,7 +550,12 @@ async def update_settings(payload: SiteSettingsUpdate, current_user: UserDoc = D
         upsert=True
     )
     doc = await db.site_settings.find_one({"key": "site"})
-    return {"logo_url": doc.get("logo_url", ""), "hero_url": doc.get("hero_url", "")}
+    return {
+        "logo_url": doc.get("logo_url", ""),
+        "hero_url": doc.get("hero_url", ""),
+        "whatsapp_number": doc.get("whatsapp_number", ""),
+        "phone_display": doc.get("phone_display", "")
+    }
 
 
 # Seed database on startup
@@ -557,8 +588,8 @@ async def startup_event():
         await db.users.insert_one(admin_doc.to_mongo())
         logger.info(f"Admin user seeded with email: {admin_email}")
     else:
-        # Update password if changed in env
-        if not verify_password(admin_password, admin_exist["password_hash"]):
+        # Update password from env only if admin hasn't self-changed it via the panel
+        if not admin_exist.get("password_changed") and not verify_password(admin_password, admin_exist["password_hash"]):
             await db.users.update_one(
                 {"email": admin_email},
                 {"$set": {"password_hash": hash_password(admin_password)}}

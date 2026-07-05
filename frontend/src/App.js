@@ -40,6 +40,8 @@ const API = `${BACKEND_URL}/api`;
 // Default branding assets (used when admin has not uploaded custom ones)
 const DEFAULT_LOGO = "https://customer-assets.emergentagent.com/job_natural-sweets-store/artifacts/fvh7hzey_file_00000000b6e071fa838a7b01e5de191c.png";
 const DEFAULT_HERO = "https://images.pexels.com/photos/8887196/pexels-photo-8887196.jpeg";
+const DEFAULT_WHATSAPP = "919990902379";
+const DEFAULT_PHONE_DISPLAY = "+91 99909 02379";
 
 // Configure axios with credentials for secure JWT httpOnly cookies
 axios.defaults.withCredentials = true;
@@ -120,11 +122,19 @@ export default function App() {
   const [uploadingProductImg, setUploadingProductImg] = useState(false);
 
   // Site branding (logo & hero banner) State
-  const [siteSettings, setSiteSettings] = useState({ logo_url: "", hero_url: "" });
+  const [siteSettings, setSiteSettings] = useState({ logo_url: "", hero_url: "", whatsapp_number: "", phone_display: "" });
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
   const logoSrc = siteSettings.logo_url || DEFAULT_LOGO;
   const heroSrc = siteSettings.hero_url || DEFAULT_HERO;
+  const whatsappNumber = siteSettings.whatsapp_number || DEFAULT_WHATSAPP;
+  const phoneDisplay = siteSettings.phone_display || DEFAULT_PHONE_DISPLAY;
+
+  // Admin Contact & Account Settings State
+  const [contactForm, setContactForm] = useState({ whatsapp_number: "", phone_display: "" });
+  const [savingContact, setSavingContact] = useState(false);
+  const [pwdForm, setPwdForm] = useState({ current_password: "", new_password: "", confirm_password: "" });
+  const [changingPwd, setChangingPwd] = useState(false);
 
   // References for scrolling
   const catalogRef = useRef(null);
@@ -208,6 +218,14 @@ export default function App() {
     }
   }, [user]);
 
+  // Keep the admin contact form in sync with loaded settings
+  useEffect(() => {
+    setContactForm({
+      whatsapp_number: siteSettings.whatsapp_number || "",
+      phone_display: siteSettings.phone_display || ""
+    });
+  }, [siteSettings.whatsapp_number, siteSettings.phone_display]);
+
   // Scroll to section helper
   const scrollTo = (ref, tabName) => {
     setActiveTab(tabName);
@@ -286,7 +304,7 @@ export default function App() {
       return;
     }
     
-    const storeWhatsApp = "919990902379"; // Pre-defined shop number
+    const storeWhatsApp = whatsappNumber; // Configurable via Admin > Settings
     let orderMsg = `*NAVNIDHI SWEETS - NEW ORDER INQUIRY* 🌟\n`;
     orderMsg += `_Taste Crafted with Purity_\n`;
     orderMsg += `=================================\n`;
@@ -525,6 +543,53 @@ export default function App() {
       toast.success("Reset to default.");
     } catch (err) {
       toast.error(formatApiError(err));
+    }
+  };
+
+  const handleSaveContactSettings = async (e) => {
+    e.preventDefault();
+    const raw = contactForm.whatsapp_number.replace(/[^0-9]/g, "");
+    if (raw && (raw.length < 10 || raw.length > 15)) {
+      toast.error("Enter a valid WhatsApp number with country code (e.g. 919990902379).");
+      return;
+    }
+    setSavingContact(true);
+    try {
+      const { data } = await axios.put(`${API}/settings`, {
+        whatsapp_number: raw,
+        phone_display: contactForm.phone_display.trim()
+      });
+      setSiteSettings(data);
+      toast.success("Contact details updated!");
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setSavingContact(false);
+    }
+  };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    if (pwdForm.new_password.length < 8) {
+      toast.error("New password must be at least 8 characters long.");
+      return;
+    }
+    if (pwdForm.new_password !== pwdForm.confirm_password) {
+      toast.error("New password and confirmation do not match.");
+      return;
+    }
+    setChangingPwd(true);
+    try {
+      await axios.post(`${API}/auth/change-password`, {
+        current_password: pwdForm.current_password,
+        new_password: pwdForm.new_password
+      });
+      toast.success("Password changed successfully!");
+      setPwdForm({ current_password: "", new_password: "", confirm_password: "" });
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setChangingPwd(false);
     }
   };
 
@@ -808,6 +873,13 @@ export default function App() {
             >
               <ImageIcon className="h-3.5 w-3.5" /> Branding
             </button>
+            <button 
+              onClick={() => setAdminTab("settings")}
+              className={`px-5 py-3 text-sm font-semibold tracking-wider uppercase border-b-2 transition-colors whitespace-nowrap flex items-center gap-1.5 ${adminTab === "settings" ? "border-[#D4AF37] text-[#D4AF37]" : "border-transparent text-gray-400 hover:text-white"}`}
+              data-testid="admin-tab-settings"
+            >
+              <Sliders className="h-3.5 w-3.5" /> Settings
+            </button>
           </div>
 
           {/* TAB PANELS */}
@@ -1007,6 +1079,98 @@ export default function App() {
                   </div>
                 ))
               )}
+            </div>
+          )}
+
+          {adminTab === "settings" && (
+            <div className="max-w-3xl mx-auto space-y-8" data-testid="admin-settings-panel">
+              {/* Contact & WhatsApp */}
+              <form onSubmit={handleSaveContactSettings} className="border border-white/10 bg-[#111]/40 p-6 rounded space-y-5">
+                <div>
+                  <h3 className="font-serif text-xl text-[#D4AF37] font-medium flex items-center gap-2"><MessageSquare className="h-5 w-5" /> Contact & WhatsApp</h3>
+                  <p className="text-xs text-gray-400 mt-1">Orders and the "Order via WhatsApp" button use this number.</p>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs text-gray-400 font-semibold tracking-wide uppercase">WhatsApp Number (with country code)</label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. 919990902379"
+                    value={contactForm.whatsapp_number}
+                    onChange={(e) => setContactForm({ ...contactForm, whatsapp_number: e.target.value })}
+                    className="w-full bg-[#0A0A0A] border border-white/10 rounded p-2.5 text-sm focus:border-[#D4AF37] outline-none text-white"
+                    data-testid="settings-whatsapp-input"
+                  />
+                  <p className="text-[10px] text-gray-500">Digits only, include country code without + (e.g. 91 for India). Leave blank to use default.</p>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs text-gray-400 font-semibold tracking-wide uppercase">Displayed Phone Number</label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. +91 99909 02379"
+                    value={contactForm.phone_display}
+                    onChange={(e) => setContactForm({ ...contactForm, phone_display: e.target.value })}
+                    className="w-full bg-[#0A0A0A] border border-white/10 rounded p-2.5 text-sm focus:border-[#D4AF37] outline-none text-white"
+                    data-testid="settings-phone-input"
+                  />
+                  <p className="text-[10px] text-gray-500">Shown in the Contact section and footer.</p>
+                </div>
+                <div className="flex justify-end border-t border-white/5 pt-4">
+                  <button type="submit" disabled={savingContact} className="bg-[#D4AF37] hover:bg-[#E5C865] text-[#0A0A0A] font-semibold text-xs uppercase tracking-wider px-6 py-3 disabled:opacity-50 transition-colors" data-testid="settings-contact-save">
+                    {savingContact ? "Saving..." : "Save Contact Details"}
+                  </button>
+                </div>
+              </form>
+
+              {/* Change Password */}
+              <form onSubmit={handleChangePassword} className="border border-white/10 bg-[#111]/40 p-6 rounded space-y-5">
+                <div>
+                  <h3 className="font-serif text-xl text-[#D4AF37] font-medium flex items-center gap-2"><Lock className="h-5 w-5" /> Change Password</h3>
+                  <p className="text-xs text-gray-400 mt-1">Update your admin login password. Minimum 8 characters.</p>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs text-gray-400 font-semibold tracking-wide uppercase">Current Password</label>
+                  <input 
+                    type="password"
+                    autoComplete="current-password"
+                    value={pwdForm.current_password}
+                    onChange={(e) => setPwdForm({ ...pwdForm, current_password: e.target.value })}
+                    className="w-full bg-[#0A0A0A] border border-white/10 rounded p-2.5 text-sm focus:border-[#D4AF37] outline-none text-white"
+                    data-testid="settings-current-pwd"
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-xs text-gray-400 font-semibold tracking-wide uppercase">New Password</label>
+                    <input 
+                      type="password"
+                      autoComplete="new-password"
+                      value={pwdForm.new_password}
+                      onChange={(e) => setPwdForm({ ...pwdForm, new_password: e.target.value })}
+                      className="w-full bg-[#0A0A0A] border border-white/10 rounded p-2.5 text-sm focus:border-[#D4AF37] outline-none text-white"
+                      data-testid="settings-new-pwd"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs text-gray-400 font-semibold tracking-wide uppercase">Confirm New Password</label>
+                    <input 
+                      type="password"
+                      autoComplete="new-password"
+                      value={pwdForm.confirm_password}
+                      onChange={(e) => setPwdForm({ ...pwdForm, confirm_password: e.target.value })}
+                      className="w-full bg-[#0A0A0A] border border-white/10 rounded p-2.5 text-sm focus:border-[#D4AF37] outline-none text-white"
+                      data-testid="settings-confirm-pwd"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end border-t border-white/5 pt-4">
+                  <button type="submit" disabled={changingPwd} className="bg-[#D4AF37] hover:bg-[#E5C865] text-[#0A0A0A] font-semibold text-xs uppercase tracking-wider px-6 py-3 disabled:opacity-50 transition-colors" data-testid="settings-change-pwd-btn">
+                    {changingPwd ? "Updating..." : "Update Password"}
+                  </button>
+                </div>
+              </form>
             </div>
           )}
 
@@ -1725,7 +1889,7 @@ export default function App() {
                     <Phone className="h-5 w-5 text-[#D4AF37] shrink-0 mt-0.5" />
                     <div>
                       <strong className="block text-white mb-0.5">Call Support</strong>
-                      +91 99909 02379
+                      {phoneDisplay}
                     </div>
                   </div>
 
@@ -2055,7 +2219,7 @@ export default function App() {
             <h4 className="font-serif text-lg text-white font-semibold tracking-wide">Navnidhi Outlet</h4>
             <div className="space-y-2">
               <p className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-[#D4AF37]" /> Dwarka, New Delhi - 110077</p>
-              <p className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-[#D4AF37]" /> +91 99909 02379</p>
+              <p className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-[#D4AF37]" /> {phoneDisplay}</p>
               <p className="flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-[#D4AF37]" /> info@navnidhisweets.com</p>
             </div>
           </div>

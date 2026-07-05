@@ -1,9 +1,9 @@
 """
 Backend tests for Navnidhi Sweets:
-- Auth (login/me)
+- Auth (login/me/change-password)
 - File upload (auth guard, image validation, upload+serve)
-- Site settings (public GET, admin PUT, reset via empty string)
-- Regression: products (public list), reviews (public list), inquiries (public POST, admin GET)
+- Site settings (public GET, admin PUT with whatsapp/phone, reset)
+- Regression: products, reviews, inquiries
 """
 import io
 import os
