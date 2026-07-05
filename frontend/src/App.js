@@ -1603,7 +1603,7 @@ export default function App() {
               <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6 mb-12">
                 {/* Category Tabs */}
                 <div className="flex items-center space-x-1.5 overflow-x-auto pb-2 scrollbar-none border-b border-white/5 lg:border-none">
-                  {["Sweets", "Snacks", "Gifting"].map(cat => (
+                  {["Sweets", "Bhaji", "Snacks", "Gifting"].map(cat => (
                     <button 
                       key={cat}
                       onClick={() => { setSelectedCategory(cat); setActiveTab("Sweets"); }}
