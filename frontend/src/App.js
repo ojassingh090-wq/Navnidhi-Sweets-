@@ -25,7 +25,9 @@ import {
   LogOut,
   Send,
   Sliders,
-  AlertCircle
+  AlertCircle,
+  Upload,
+  Image as ImageIcon
 } from "lucide-react";
 import axios from "axios";
 import { Toaster, toast } from "./components/ui/sonner";
@@ -34,6 +36,10 @@ import "@/App.css";
 // Configure Backend URL
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://natural-sweets-store.preview.emergentagent.com";
 const API = `${BACKEND_URL}/api`;
+
+// Default branding assets (used when admin has not uploaded custom ones)
+const DEFAULT_LOGO = "https://customer-assets.emergentagent.com/job_natural-sweets-store/artifacts/fvh7hzey_file_00000000b6e071fa838a7b01e5de191c.png";
+const DEFAULT_HERO = "https://images.pexels.com/photos/8887196/pexels-photo-8887196.jpeg";
 
 // Configure axios with credentials for secure JWT httpOnly cookies
 axios.defaults.withCredentials = true;
@@ -111,6 +117,14 @@ export default function App() {
     in_stock: true
   });
   const [savingProduct, setSavingProduct] = useState(false);
+  const [uploadingProductImg, setUploadingProductImg] = useState(false);
+
+  // Site branding (logo & hero banner) State
+  const [siteSettings, setSiteSettings] = useState({ logo_url: "", hero_url: "" });
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingHero, setUploadingHero] = useState(false);
+  const logoSrc = siteSettings.logo_url || DEFAULT_LOGO;
+  const heroSrc = siteSettings.hero_url || DEFAULT_HERO;
 
   // References for scrolling
   const catalogRef = useRef(null);
@@ -148,6 +162,14 @@ export default function App() {
         ]);
         setProducts(prodRes.data);
         setReviews(revRes.data);
+        
+        // Load site branding settings (logo & hero)
+        try {
+          const settingsRes = await axios.get(`${API}/settings`);
+          setSiteSettings(settingsRes.data);
+        } catch (se) {
+          console.error("Error loading site settings:", se);
+        }
         
         // Setup initial weights for sweets
         const initialWeights = {};
@@ -450,6 +472,62 @@ export default function App() {
     setAdminTab("edit-product");
   };
 
+  // Generic image upload -> returns absolute URL served by backend
+  const uploadImageFile = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const { data } = await axios.post(`${API}/upload`, formData, {
+      headers: { "Content-Type": "multipart/form-data" }
+    });
+    return `${BACKEND_URL}${data.url}`;
+  };
+
+  const handleProductImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingProductImg(true);
+    try {
+      const url = await uploadImageFile(file);
+      setProductForm((prev) => ({ ...prev, image_url: url }));
+      toast.success("Image uploaded successfully!");
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setUploadingProductImg(false);
+      e.target.value = "";
+    }
+  };
+
+  const handleBrandingUpload = async (e, kind) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const setLoading = kind === "logo" ? setUploadingLogo : setUploadingHero;
+    setLoading(true);
+    try {
+      const url = await uploadImageFile(file);
+      const field = kind === "logo" ? "logo_url" : "hero_url";
+      const { data } = await axios.put(`${API}/settings`, { [field]: url });
+      setSiteSettings(data);
+      toast.success(`${kind === "logo" ? "Logo" : "Hero banner"} updated successfully!`);
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setLoading(false);
+      e.target.value = "";
+    }
+  };
+
+  const handleResetBranding = async (kind) => {
+    try {
+      const field = kind === "logo" ? "logo_url" : "hero_url";
+      const { data } = await axios.put(`${API}/settings`, { [field]: "" });
+      setSiteSettings(data);
+      toast.success("Reset to default.");
+    } catch (err) {
+      toast.error(formatApiError(err));
+    }
+  };
+
   const handleSaveProduct = async (e) => {
     e.preventDefault();
     if (!productForm.item || !productForm.price) {
@@ -540,7 +618,7 @@ export default function App() {
             data-testid="brand-logo-trigger"
           >
             <img 
-              src="https://customer-assets.emergentagent.com/job_natural-sweets-store/artifacts/fvh7hzey_file_00000000b6e071fa838a7b01e5de191c.png" 
+              src={logoSrc} 
               alt="Navnidhi Sweets" 
               className="h-12 w-12 object-contain group-hover:scale-105 transition-transform duration-300 border border-[#D4AF37]/20 rounded-full bg-[#111]"
             />
@@ -722,6 +800,13 @@ export default function App() {
               data-testid="admin-tab-reviews"
             >
               Testimonials ({adminReviews.length})
+            </button>
+            <button 
+              onClick={() => setAdminTab("branding")}
+              className={`px-5 py-3 text-sm font-semibold tracking-wider uppercase border-b-2 transition-colors whitespace-nowrap flex items-center gap-1.5 ${adminTab === "branding" ? "border-[#D4AF37] text-[#D4AF37]" : "border-transparent text-gray-400 hover:text-white"}`}
+              data-testid="admin-tab-branding"
+            >
+              <ImageIcon className="h-3.5 w-3.5" /> Branding
             </button>
           </div>
 
@@ -925,6 +1010,62 @@ export default function App() {
             </div>
           )}
 
+          {adminTab === "branding" && (
+            <div className="max-w-3xl mx-auto space-y-8" data-testid="admin-branding-panel">
+              <p className="text-sm text-gray-400">Upload your shop logo and homepage banner. Changes appear on the website instantly.</p>
+
+              {/* Logo */}
+              <div className="border border-white/10 bg-[#111]/40 p-6 rounded space-y-4">
+                <h3 className="font-serif text-xl text-[#D4AF37] font-medium">Shop Logo</h3>
+                <div className="flex flex-col sm:flex-row items-center gap-6">
+                  <img 
+                    src={logoSrc} 
+                    alt="Current logo" 
+                    className="h-20 w-20 object-contain border border-[#D4AF37]/20 rounded-full bg-[#0A0A0A]"
+                    data-testid="branding-logo-preview"
+                  />
+                  <div className="flex flex-wrap items-center gap-3">
+                    <label className="bg-[#D4AF37] hover:bg-[#E5C865] text-[#0A0A0A] font-semibold text-xs uppercase tracking-wider px-5 py-3 cursor-pointer flex items-center gap-2 transition-colors">
+                      <Upload className="h-4 w-4" />
+                      {uploadingLogo ? "Uploading..." : "Upload Logo"}
+                      <input type="file" accept="image/*" className="hidden" disabled={uploadingLogo} onChange={(e) => handleBrandingUpload(e, "logo")} data-testid="branding-logo-input" />
+                    </label>
+                    {siteSettings.logo_url && (
+                      <button onClick={() => handleResetBranding("logo")} className="border border-white/10 hover:bg-white/5 text-gray-300 text-xs uppercase tracking-wider px-4 py-3 transition-colors" data-testid="branding-logo-reset">
+                        Reset to Default
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Hero Banner */}
+              <div className="border border-white/10 bg-[#111]/40 p-6 rounded space-y-4">
+                <h3 className="font-serif text-xl text-[#D4AF37] font-medium">Homepage Hero Banner</h3>
+                <div className="rounded overflow-hidden border border-white/10 bg-[#0A0A0A]">
+                  <img 
+                    src={heroSrc} 
+                    alt="Current hero banner" 
+                    className="w-full h-44 object-cover"
+                    data-testid="branding-hero-preview"
+                  />
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <label className="bg-[#D4AF37] hover:bg-[#E5C865] text-[#0A0A0A] font-semibold text-xs uppercase tracking-wider px-5 py-3 cursor-pointer flex items-center gap-2 transition-colors">
+                    <Upload className="h-4 w-4" />
+                    {uploadingHero ? "Uploading..." : "Upload Banner"}
+                    <input type="file" accept="image/*" className="hidden" disabled={uploadingHero} onChange={(e) => handleBrandingUpload(e, "hero")} data-testid="branding-hero-input" />
+                  </label>
+                  {siteSettings.hero_url && (
+                    <button onClick={() => handleResetBranding("hero")} className="border border-white/10 hover:bg-white/5 text-gray-300 text-xs uppercase tracking-wider px-4 py-3 transition-colors" data-testid="branding-hero-reset">
+                      Reset to Default
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
           {adminTab === "edit-product" && (
             <div className="max-w-2xl mx-auto border border-white/10 bg-[#111]/40 p-8 rounded">
               <h2 className="font-serif text-2xl text-[#D4AF37] mb-6 font-medium border-b border-white/5 pb-3">
@@ -1058,14 +1199,25 @@ export default function App() {
                 )}
 
                 <div className="space-y-1">
-                  <label className="text-xs text-gray-400 font-semibold tracking-wide uppercase">Image URL (Optional)</label>
-                  <input 
-                    type="url"
-                    placeholder="https://images.unsplash.com/..."
-                    value={productForm.image_url}
-                    onChange={(e) => setProductForm({ ...productForm, image_url: e.target.value })}
-                    className="w-full bg-[#0A0A0A] border border-white/10 rounded p-2.5 text-sm focus:border-[#D4AF37] outline-none text-white"
-                  />
+                  <label className="text-xs text-gray-400 font-semibold tracking-wide uppercase">Product Image</label>
+                  {productForm.image_url && (
+                    <img src={productForm.image_url} alt="Product preview" className="h-24 w-24 object-cover rounded border border-white/10 mb-2" data-testid="admin-prod-image-preview" />
+                  )}
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <label className="bg-[#D4AF37] hover:bg-[#E5C865] text-[#0A0A0A] font-semibold text-xs uppercase tracking-wider px-4 py-2.5 cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap transition-colors">
+                      <Upload className="h-4 w-4" />
+                      {uploadingProductImg ? "Uploading..." : "Upload Photo"}
+                      <input type="file" accept="image/*" className="hidden" disabled={uploadingProductImg} onChange={handleProductImageUpload} data-testid="admin-prod-image-upload" />
+                    </label>
+                    <input 
+                      type="url"
+                      placeholder="...or paste an image link (optional)"
+                      value={productForm.image_url}
+                      onChange={(e) => setProductForm({ ...productForm, image_url: e.target.value })}
+                      className="flex-grow bg-[#0A0A0A] border border-white/10 rounded p-2.5 text-sm focus:border-[#D4AF37] outline-none text-white"
+                      data-testid="admin-prod-form-image-url"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-1">
@@ -1109,7 +1261,7 @@ export default function App() {
             {/* Background Image with Dark Golden Gradient Overlay */}
             <div className="absolute inset-0">
               <img 
-                src="https://images.pexels.com/photos/8887196/pexels-photo-8887196.jpeg" 
+                src={heroSrc} 
                 alt="Navnidhi Luxury Sweets Banner" 
                 className="w-full h-full object-cover scale-105 filter brightness-[0.25]"
               />
@@ -1870,7 +2022,7 @@ export default function App() {
           <div className="md:col-span-4 space-y-4">
             <div className="flex items-center space-x-3">
               <img 
-                src="https://customer-assets.emergentagent.com/job_natural-sweets-store/artifacts/fvh7hzey_file_00000000b6e071fa838a7b01e5de191c.png" 
+                src={logoSrc} 
                 alt="Navnidhi Logo" 
                 className="h-10 w-10 border border-[#D4AF37]/20 rounded-full"
               />

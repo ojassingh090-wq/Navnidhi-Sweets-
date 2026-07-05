@@ -5,7 +5,11 @@ from typing import List, Optional
 from pathlib import Path
 import json
 
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response, status
+import uuid
+import asyncio
+import requests
+
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response, status, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -31,6 +35,55 @@ MONGO_URL = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
 DB_NAME = os.environ.get("DB_NAME", "test_database")
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
+
+# --- Object Storage (Emergent) ---
+STORAGE_URL = "https://integrations.emergentagent.com/objstore/api/v1/storage"
+EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY")
+APP_NAME = "navnidhi-sweets"
+storage_key = None
+
+MIME_TYPES = {
+    "jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png",
+    "gif": "image/gif", "webp": "image/webp", "svg": "image/svg+xml",
+}
+
+def init_storage():
+    global storage_key
+    if storage_key:
+        return storage_key
+    resp = requests.post(f"{STORAGE_URL}/init", json={"emergent_key": EMERGENT_KEY}, timeout=30)
+    resp.raise_for_status()
+    storage_key = resp.json()["storage_key"]
+    return storage_key
+
+def _put_object(path: str, data: bytes, content_type: str) -> dict:
+    key = init_storage()
+    resp = requests.put(
+        f"{STORAGE_URL}/objects/{path}",
+        headers={"X-Storage-Key": key, "Content-Type": content_type},
+        data=data, timeout=120
+    )
+    if resp.status_code == 403:
+        # storage_key expired, re-init once
+        global storage_key
+        storage_key = None
+        key = init_storage()
+        resp = requests.put(
+            f"{STORAGE_URL}/objects/{path}",
+            headers={"X-Storage-Key": key, "Content-Type": content_type},
+            data=data, timeout=120
+        )
+    resp.raise_for_status()
+    return resp.json()
+
+def _get_object(path: str) -> tuple:
+    key = init_storage()
+    resp = requests.get(
+        f"{STORAGE_URL}/objects/{path}",
+        headers={"X-Storage-Key": key}, timeout=60
+    )
+    resp.raise_for_status()
+    return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
 
 # Main App
 app = FastAPI(title="Navnidhi Sweets API", version="1.0.0")
@@ -135,6 +188,10 @@ class ReviewDoc(BaseDocument):
     comment: str
     approved: bool = True
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class SiteSettingsUpdate(BaseModel):
+    logo_url: Optional[str] = None
+    hero_url: Optional[str] = None
 
 # API Request/Response Models
 class UserResponse(BaseModel):
@@ -398,9 +455,88 @@ async def delete_review(id: str, current_user: UserDoc = Depends(get_current_use
     return {"message": "Review deleted successfully"}
 
 
+# --- FILE UPLOAD & STORAGE ENDPOINTS ---
+@api_router.post("/upload")
+async def upload_image(file: UploadFile = File(...), current_user: UserDoc = Depends(get_current_user)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Only admins can upload images")
+
+    ext = (file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else "bin")
+    if ext not in MIME_TYPES:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only image files (jpg, png, gif, webp, svg) are allowed")
+
+    content_type = MIME_TYPES[ext]
+    data = await file.read()
+    if len(data) > 10 * 1024 * 1024:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Image too large. Max 10MB allowed.")
+
+    path = f"{APP_NAME}/uploads/{uuid.uuid4()}.{ext}"
+    try:
+        result = await asyncio.to_thread(_put_object, path, data, content_type)
+    except Exception as e:
+        logger.error(f"Upload failed: {e}")
+        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail="Image upload failed. Please try again.")
+
+    stored_path = result["path"]
+    await db.files.insert_one({
+        "id": str(uuid.uuid4()),
+        "storage_path": stored_path,
+        "original_filename": file.filename,
+        "content_type": content_type,
+        "size": result.get("size", len(data)),
+        "is_deleted": False,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    })
+    return {"path": stored_path, "url": f"/api/files/{stored_path}"}
+
+@api_router.get("/files/{path:path}")
+async def serve_file(path: str):
+    record = await db.files.find_one({"storage_path": path, "is_deleted": False})
+    if not record:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
+    try:
+        data, content_type = await asyncio.to_thread(_get_object, path)
+    except Exception as e:
+        logger.error(f"File fetch failed: {e}")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
+    return Response(
+        content=data,
+        media_type=record.get("content_type", content_type),
+        headers={"Cache-Control": "public, max-age=31536000"}
+    )
+
+# --- SITE SETTINGS ENDPOINTS (logo & hero banner) ---
+@api_router.get("/settings")
+async def get_settings():
+    doc = await db.site_settings.find_one({"key": "site"})
+    if not doc:
+        return {"logo_url": "", "hero_url": ""}
+    return {"logo_url": doc.get("logo_url", ""), "hero_url": doc.get("hero_url", "")}
+
+@api_router.put("/settings")
+async def update_settings(payload: SiteSettingsUpdate, current_user: UserDoc = Depends(get_current_user)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Only admins can update settings")
+    update_fields = {k: v for k, v in payload.model_dump().items() if v is not None}
+    await db.site_settings.update_one(
+        {"key": "site"},
+        {"$set": {**update_fields, "key": "site"}},
+        upsert=True
+    )
+    doc = await db.site_settings.find_one({"key": "site"})
+    return {"logo_url": doc.get("logo_url", ""), "hero_url": doc.get("hero_url", "")}
+
+
 # Seed database on startup
 @app.on_event("startup")
 async def startup_event():
+    # 0. Initialize object storage
+    try:
+        await asyncio.to_thread(init_storage)
+        logger.info("Object storage initialized successfully.")
+    except Exception as e:
+        logger.error(f"Object storage init failed: {e}")
+
     # 1. Create indexes
     await db.users.create_index("email", unique=True)
     await db.login_attempts.create_index("identifier")
@@ -509,16 +645,13 @@ async def startup_event():
 # Include the router in the main app
 app.include_router(api_router)
 
-# CORS Middleware with explicit origins and regex to handle port 3000 and production domain
+# CORS Middleware - origins configurable via CORS_ORIGINS env var
+cors_origins_env = os.environ.get("CORS_ORIGINS", "*")
+cors_origins = [o.strip() for o in cors_origins_env.split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://natural-sweets-store.preview.emergentagent.com"
-    ],
-    allow_origin_regex="https://.*\\.preview\\.emergentagent\\.com",
+    allow_origins=cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
