@@ -286,7 +286,7 @@ export default function App() {
       return;
     }
     
-    const storeWhatsApp = "919876543210"; // Pre-defined shop number
+    const storeWhatsApp = "919990902379"; // Pre-defined shop number
     let orderMsg = `*NAVNIDHI SWEETS - NEW ORDER INQUIRY* 🌟\n`;
     orderMsg += `_Taste Crafted with Purity_\n`;
     orderMsg += `=================================\n`;
@@ -1725,7 +1725,7 @@ export default function App() {
                     <Phone className="h-5 w-5 text-[#D4AF37] shrink-0 mt-0.5" />
                     <div>
                       <strong className="block text-white mb-0.5">Call Support</strong>
-                      +91 98765 43210
+                      +91 99909 02379
                     </div>
                   </div>
 
@@ -2055,7 +2055,7 @@ export default function App() {
             <h4 className="font-serif text-lg text-white font-semibold tracking-wide">Navnidhi Outlet</h4>
             <div className="space-y-2">
               <p className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-[#D4AF37]" /> Dwarka, New Delhi - 110077</p>
-              <p className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-[#D4AF37]" /> +91 98765 43210</p>
+              <p className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-[#D4AF37]" /> +91 99909 02379</p>
               <p className="flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-[#D4AF37]" /> info@navnidhisweets.com</p>
             </div>
           </div>
